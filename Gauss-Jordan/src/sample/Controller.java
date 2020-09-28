@@ -21,16 +21,15 @@ public class Controller implements Initializable {
     @FXML
     TextField xres,yres,zres;
     double valorX1, valorX2, valorX3, valorY1, valorY2,valorY3,valorZ1,valorZ2,valorZ3,valorRES1,valorRES2,valorRES3;
-    double xres1,yres2,zres3;
     double[][] matriz;
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String prueba = X1.getText();
+        try{
+            botonCalcular.setOnAction(event -> getResult());
+        }catch (Exception e){
 
-        botonCalcular.setOnAction(event -> getResult());
+        }
     }
 
     public double[][] matrix(){
@@ -87,14 +86,9 @@ public class Controller implements Initializable {
                 matriz[pivote][columna] = matriz[pivote][columna] / valorPivote;
             }
 
-            if(pivote + 1 < numeroVariables){
-                System.out.println("Volvemos 0 los indices de arriba y abajo del pivote");
-            }
-
             for (fila = 0; fila < numeroVariables; fila++){ //Recorre la columna del pivote para hacer 0 arriba y abajo
                 if(fila != pivote){
                     factor = matriz[fila][pivote];
-                    System.out.println("Hacemos 0 el inidce de la fila "+ (fila+1)+ " haciendo: R"+(fila+1)+" - "+factor+" * R"+(pivote+1));
                     for(columna = pivote; columna < numeroVariables + 1; columna++){
                         matriz[fila][columna] = matriz[fila][columna] - (factor * matriz[pivote][columna]);
                     }
@@ -107,7 +101,6 @@ public class Controller implements Initializable {
     public void getResult(){
         obtenerX();
         double resultado[] = new double[3];
-        int pivoteFila;
         for(int fila=0; fila < 3; fila++){
             resultado[fila] = matriz[fila][3];
         }
@@ -127,14 +120,12 @@ public class Controller implements Initializable {
             zres.setText(String.valueOf(resultado3));
             System.out.println(resultado3);
         }
-
     }
 
     public void imprimeMatriz(){
         for (int i = 0; i<3; i++){
             for (int k=0; k<4; k++){
                     System.out.print("|"+matriz[i][k]+"|");
-//                    System.out.println("|"+matriz[i][k]+"|");
             }
             System.out.println("");
         }
