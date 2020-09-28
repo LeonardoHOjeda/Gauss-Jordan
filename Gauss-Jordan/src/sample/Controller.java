@@ -6,11 +6,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -25,6 +27,9 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        xres.setEditable(false);
+        yres.setEditable(false);
+        zres.setEditable(false);
         try{
             botonCalcular.setOnAction(event -> getResult());
         }catch (Exception e){
@@ -35,40 +40,44 @@ public class Controller implements Initializable {
     public double[][] matrix(){
         matriz = new double[3][4];
         /*Valores fila 1*/
-        valorX1 = Double.parseDouble(X1.getText());
-        valorY1 = Double.parseDouble(Y1.getText());
-        valorZ1 = Double.parseDouble(Z1.getText());
-        /*Valores fila 2*/
-        valorX2 = Double.parseDouble(X2.getText());
-        valorY2 = Double.parseDouble(Y2.getText());
-        valorZ2 = Double.parseDouble(Z2.getText());
-        /*Valores fila 3*/
-        valorX3 = Double.parseDouble(X3.getText());
-        valorY3 = Double.parseDouble(Y3.getText());
-        valorZ3 = Double.parseDouble(Z3.getText());
-        /*Valores resultado*/
-        valorRES1 = Double.parseDouble(RES1.getText());
-        valorRES2 = Double.parseDouble(RES2.getText());
-        valorRES3 = Double.parseDouble(RES3.getText());
+        try{
+            valorX1 = Double.parseDouble(X1.getText());
+            valorY1 = Double.parseDouble(Y1.getText());
+            valorZ1 = Double.parseDouble(Z1.getText());
+            /*Valores fila 2*/
+            valorX2 = Double.parseDouble(X2.getText());
+            valorY2 = Double.parseDouble(Y2.getText());
+            valorZ2 = Double.parseDouble(Z2.getText());
+            /*Valores fila 3*/
+            valorX3 = Double.parseDouble(X3.getText());
+            valorY3 = Double.parseDouble(Y3.getText());
+            valorZ3 = Double.parseDouble(Z3.getText());
+            /*Valores resultado*/
+            valorRES1 = Double.parseDouble(RES1.getText());
+            valorRES2 = Double.parseDouble(RES2.getText());
+            valorRES3 = Double.parseDouble(RES3.getText());
 
-        /*Matriz fila 1*/
-        matriz[0][0] = valorX1;
-        matriz[0][1] = valorY1;
-        matriz[0][2] = valorZ1;
-        matriz[0][3] = valorRES1;
-        /*Matriz fila 2*/
-        matriz[1][0] = valorX2;
-        matriz[1][1] = valorY2;
-        matriz[1][2] = valorZ2;
-        matriz[1][3] = valorRES2;
-        /*Matriz fila 3*/
-        matriz[2][0] = valorX3;
-        matriz[2][1] = valorY3;
-        matriz[2][2] = valorZ3;
-        matriz[2][3] = valorRES3;
-
-
-
+            /*Matriz fila 1*/
+            matriz[0][0] = valorX1;
+            matriz[0][1] = valorY1;
+            matriz[0][2] = valorZ1;
+            matriz[0][3] = valorRES1;
+            /*Matriz fila 2*/
+            matriz[1][0] = valorX2;
+            matriz[1][1] = valorY2;
+            matriz[1][2] = valorZ2;
+            matriz[1][3] = valorRES2;
+            /*Matriz fila 3*/
+            matriz[2][0] = valorX3;
+            matriz[2][1] = valorY3;
+            matriz[2][2] = valorZ3;
+            matriz[2][3] = valorRES3;
+        }catch(Exception eo){
+            Alert al = new Alert(Alert.AlertType.ERROR);
+            al.setHeaderText("ERROR DE EJECUCION");
+            al.setContentText("Asegúrate de introducir valores válidos por favor.");
+            al.show();
+        }
         return matriz;
     }
     public void obtenerX(){
@@ -99,6 +108,7 @@ public class Controller implements Initializable {
     }
 
     public void getResult(){
+        DecimalFormat df = new DecimalFormat("#.##");
         obtenerX();
         double resultado[] = new double[3];
         for(int fila=0; fila < 3; fila++){
@@ -113,11 +123,11 @@ public class Controller implements Initializable {
             yres.setText("ERROR!");
             zres.setText("ERROR!");
         } else {
-            xres.setText(String.valueOf(resultado1));
-            System.out.println(resultado1);
-            yres.setText(String.valueOf(resultado2));
+            xres.setText(String.valueOf(df.format(resultado1)));
+            System.out.println(df.format(resultado1));
+            yres.setText(String.valueOf(df.format(resultado2)));
             System.out.println(resultado2);
-            zres.setText(String.valueOf(resultado3));
+            zres.setText(String.valueOf(df.format(resultado3)));
             System.out.println(resultado3);
         }
     }
