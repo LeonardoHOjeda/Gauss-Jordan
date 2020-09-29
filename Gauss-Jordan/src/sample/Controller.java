@@ -17,11 +17,9 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     @FXML
-    JFXButton botonCalcular;
+    Button botonCalcular;
     @FXML
-    JFXTextField X1, Y1, Z1,  X2, X3,  Y2, Y3,  Z2, Z3,RES1,RES2,RES3;
-    @FXML
-    TextField xres,yres,zres;
+    TextField xres,yres,zres,X1,Y1,Z1,RES1,X2,Y2,Z2,RES2,X3,Y3,Z3,RES3;
     double valorX1, valorX2, valorX3, valorY1, valorY2,valorY3,valorZ1,valorZ2,valorZ3,valorRES1,valorRES2,valorRES3;
     double[][] matriz;
 
